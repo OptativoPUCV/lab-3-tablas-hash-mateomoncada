@@ -43,15 +43,22 @@ void insertMap(HashMap * map, char * key, void * value) {
     if (map->size >= map->capacity * 0.7) {
         enlarge(map);
     }
-    
-    long i = hash(key, map->capacity * 0.7);
-    while (map->buckets[i] && map->buckets[i]-> key) {
-        if (is_equal(map->buckets[i]->key, key)) return;
+
+    long i = hash(key, map->capacity);
+    long original = i;
+
+    while (map->buckets[i] != NULL && map->buckets[i]->key != NULL) {
+        if (is_equal(map->buckets[i]->key, key)) return;  
         i = (i + 1) % map->capacity;
+        if (i == original) return; 
     }
 
-
+    Pair * newPair = createPair(strdup(key), value);
+    map->buckets[i] = newPair;
+    map->size++;
+    map->current = i;
 }
+
 
 void enlarge(HashMap * map) {
 
@@ -69,7 +76,7 @@ void enlarge(HashMap * map) {
         }
     }
     free(bucketsAnt);
-    
+
     enlarge_called = 1; //no borrar (testing purposes)
 
 
