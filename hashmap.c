@@ -44,7 +44,7 @@ void insertMap(HashMap * map, char * key, void * value) {
         enlarge(map);
     }
 
-    long i = hash(key, map->capacity);
+    long i = hash(key, map->capacity); // el i quiere decir indice (no quieria poner indice todo el rato).
     long original = i;
 
     while (map->buckets[i] != NULL && map->buckets[i]->key != NULL) {
@@ -62,7 +62,7 @@ void insertMap(HashMap * map, char * key, void * value) {
 
 void enlarge(HashMap * map) {
 
-    Pair ** bucketsAnt = map->buckets;
+    Pair ** bucketsAnt = map->buckets; // bucketsAnt quiere decir buckets antiguos.
     long capacityAnt = map->capacity;
 
     map->capacity *= 2;
