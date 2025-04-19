@@ -96,7 +96,20 @@ HashMap * createMap(long capacity) {
     return map;
 }
 
-void eraseMap(HashMap * map,  char * key) {    
+void eraseMap(HashMap * map,  char * key) {
+    long i = hash(key, map->capacity);
+    long inicio = i;
+    
+    while (map->buckets[i]) {
+        if (map->buckets[i]->key && is_equal(map->buckets[i]->key, key)) {
+            map->buckets[i]->key = NULL;
+            map->size--;
+            return;
+        }
+        i = (i + 1) % map->capacity;
+        if (i == inicio) break;
+        
+    }
 
 
 }
